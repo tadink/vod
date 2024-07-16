@@ -1,9 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use Hyperf\Session\Middleware\SessionMiddleware;
-
 /**
  * This file is part of Hyperf.
  *
@@ -12,9 +9,13 @@ use Hyperf\Session\Middleware\SessionMiddleware;
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+use Hyperf\Session\Middleware\SessionMiddleware;
+use Hyperf\Validation\Middleware\ValidationMiddleware;
+
+
 return [
     'http' => [
         SessionMiddleware::class,
-        \Hyperf\Validation\Middleware\ValidationMiddleware::class
+        ValidationMiddleware::class,
     ],
 ];

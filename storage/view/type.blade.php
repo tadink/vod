@@ -381,27 +381,11 @@
                                 </li>
                                 <li><a class="btn btn-warm"
                                         href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E5%9B%BD%E8%AF%AD-------.html">国语</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E8%8B%B1%E8%AF%AD-------.html">英语</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E7%B2%A4%E8%AF%AD-------.html">粤语</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E9%9F%A9%E8%AF%AD-------.html">韩语</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E6%B3%B0%E8%AF%AD-------.html">泰语</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E6%B3%95%E8%AF%AD-------.html">法语</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2----%E6%97%A5%E8%AF%AD-------.html">日语</a>
-                                </li>
+                                @foreach($languages as $language)
+                                    <li><a class="btn"
+                                           href="https://www.duboku.tv/vodshow/2----%E5%9B%BD%E8%AF%AD-------.html">{{$language->language}}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                             <ul class="myui-screen__list nav-slide clearfix" data-align="left">
                                 <li>

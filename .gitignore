@@ -1,0 +1,7 @@
+vendor/
+.idea/
+public/upload
+public/view
+public/img1
+runtime/
+.env

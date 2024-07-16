@@ -10,19 +10,12 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
-
 namespace App\Factory;
 
-use Hyperf\Context\ApplicationContext;
 use Hyperf\Di\Container;
 use Hyperf\Support\Filesystem\Filesystem;
 use Hyperf\ViewEngine\Blade;
 use Hyperf\ViewEngine\Compiler\BladeCompiler;
-use App\Model\Vod;
-use Hyperf\ViewEngine\HyperfViewEngine;
-use Hyperf\Stringable\Str;
-
-use function Hyperf\Support\retry;
 
 class BladeCompilerFactory
 {
@@ -32,15 +25,15 @@ class BladeCompilerFactory
             $container->get(Filesystem::class),
             Blade::config('config.cache_path')
         );
-        $blade->directive('vod_list', function ($expression) {   
-            return sprintf( <<<'PHP'
+        $blade->directive('vod_list', function ($expression) {
+            return sprintf(<<<'PHP'
                <?php 
                  $vods=\queryVods(%s); 
                  foreach($vods as $i=>$vod):?>
-            PHP,$expression);
+            PHP, $expression);
         });
-        $blade->directive('end_vod_list', function ($expression){
-            return "<?php endforeach;?>";
+        $blade->directive('end_vod_list', function ($expression) {
+            return '<?php endforeach;?>';
         });
 
         // register view components

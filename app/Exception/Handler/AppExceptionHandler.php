@@ -14,7 +14,6 @@ namespace App\Exception\Handler;
 
 use Hyperf\Context\ApplicationContext;
 use Hyperf\Context\RequestContext;
-use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Hyperf\Logger\LoggerFactory;
@@ -25,17 +24,18 @@ use Throwable;
 class AppExceptionHandler extends ExceptionHandler
 {
     protected LoggerInterface $logger;
+
     public function __construct()
     {
-        $this->logger=ApplicationContext::getContainer()->get(LoggerFactory::class)->get("error","default");
+        $this->logger = ApplicationContext::getContainer()->get(LoggerFactory::class)->get('error', 'default');
     }
 
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
-        $request=RequestContext::get();
-        $uri=$request->getUri()->__toString();
-        $this->logger->error(sprintf('%s[%s] in %s %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile(),$uri));
-        //$this->logger->error($throwable->getTraceAsString());
+        $request = RequestContext::get();
+        $uri = $request->getUri()->__toString();
+        $this->logger->error(sprintf('%s[%s] in %s %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile(), $uri));
+        // $this->logger->error($throwable->getTraceAsString());
 
         return $response->withHeader('Server', 'Hyperf')->withStatus(500)->withBody(new SwooleStream('Internal Server Error.'));
     }

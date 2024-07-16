@@ -1,9 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-use Monolog\Level;
-
 /**
  * This file is part of Hyperf.
  *
@@ -12,18 +9,22 @@ use Monolog\Level;
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+use Monolog\Formatter\JsonFormatter;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Level;
+
 return [
     'default' => [
         'handler' => [
-            'class' => Monolog\Handler\RotatingFileHandler::class,
+            'class' => RotatingFileHandler::class,
             'constructor' => [
                 'filename' => BASE_PATH . '/runtime/logs/app.log',
-                'maxFiles'=>3,
+                'maxFiles' => 3,
                 'level' => Level::Info,
             ],
         ],
         'formatter' => [
-            'class' => Monolog\Formatter\JsonFormatter::class,
+            'class' => JsonFormatter::class,
             'constructor' => [
                 'format' => null,
                 'dateFormat' => 'Y-m-d H:i:s',
@@ -33,15 +34,15 @@ return [
     ],
     'sql' => [
         'handler' => [
-            'class' => Monolog\Handler\RotatingFileHandler::class,
+            'class' => RotatingFileHandler::class,
             'constructor' => [
                 'filename' => BASE_PATH . '/runtime/logs/sql.log',
-                'maxFiles'=>3,
+                'maxFiles' => 3,
                 'level' => Level::Info,
             ],
         ],
         'formatter' => [
-            'class' => Monolog\Formatter\JsonFormatter::class,
+            'class' => JsonFormatter::class,
             'constructor' => [
                 'format' => null,
                 'dateFormat' => 'Y-m-d H:i:s',

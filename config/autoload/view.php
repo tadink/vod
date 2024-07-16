@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+use App\Components\TestComponent;
 use Hyperf\View\Mode;
 use Hyperf\ViewEngine\HyperfViewEngine;
 
@@ -34,7 +35,7 @@ return [
     # Custom components.
     'components' => [
         // 'other-alert' => \Other\ViewComponent\Alert::class
-        'test-component'=>App\Components\TestComponent::class,
+        'test-component' => TestComponent::class,
     ],
 
     # View namespaces. (Used for packages)
