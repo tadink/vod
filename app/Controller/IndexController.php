@@ -54,12 +54,73 @@ class IndexController
     public function vodType(RequestInterface $request): ViewInterface
     {
         $filter = config('vod.filter');
-        $typeId = $request->route('type_id');
+        $typeId = (int)$request->route('type_id');
         $page = (int) $request->input('page', 1);
-        $vodTypes = (new VodTypeService())->vodTypeTree();
+        $language = $request->input('language');
+        $area = $request->input('area');
+        $year = $request->input('year');
+        $letter = $request->input('letter');
+        $class = $request->input('class');
+
+        $vodTypeService = new VodTypeService();
+        $vodTypes = $vodTypeService->vodTypeTree();
+        $currentType = $vodTypeService->vodTypeById($typeId, $vodTypes);
+        $topType = $currentType->parent ?? $currentType;
+
         $vodService = new VodService();
-        $paginate = $vodService->vodsPagination(['where' => ['type_id' => ['=', $typeId]], 'page' => $page, 'limit' => 50, 'with' => ['actors']]);
-        return view('type', ['types' => $vodTypes, 'paginate' => $paginate, 'filter' => $filter]);
+        $where = [
+            'type_id' => ['=', $typeId],
+        ];
+        if ($language) {
+            $where['language'] = ['=', $language];
+        }
+        if ($area) {
+            $where['area'] = ['=', $area];
+        }
+        if ($year) {
+            $where['year'] = ['=', $year];
+        }
+        if ($letter) {
+            if ($letter == "1-9") {
+                $where['letter'] = ['between', [1, 9]];
+            } else {
+                $where['letter'] = ['=', $letter];
+            }
+        }
+        if ($class) {
+            $where['classes'] = ['=', $class];
+        }
+        $queryVars = [
+            'class' => $class,
+            'language' => $language,
+            'area' => $area,
+            'year' => $year,
+            'letter' => $letter
+        ];
+        $paginate = $vodService->vodsPagination(['where' => $where, 'page' => $page, 'limit' => 50, 'with' => ['actors']]);
+        $paginate->appends($queryVars);
+
+        return view('type', [
+            'types' => $vodTypes,
+            'paginate' => $paginate,
+            'filter' => $filter,
+            'currentType' => $currentType,
+            'topType' => $topType,
+            'queryVars' => $queryVars
+        ]);
+    }
+
+    public function detail(RequestInterface $request): ViewInterface
+    {
+        $vodId = (int)$request->route('vod_id');
+        $vodTypeService = new VodTypeService();
+        $vodTypes = $vodTypeService->vodTypeTree();
+        $vodService = new VodService();
+        $vod = $vodService->vodDetail($vodId);
+        $currentType = $vod->type;
+        $topType = $currentType->parent ?? $currentType;
+        $highScoreList = $vodService->highScoreVods($vod->type_id);
+        return view('detail', ['types' => $vodTypes, 'highScoreList' => $highScoreList, 'vod' => $vod, 'topType' => $topType,  'currentType' => $currentType]);
     }
 
     public function play(RequestInterface $request): MessageResponseInterface|ViewInterface

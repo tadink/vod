@@ -399,7 +399,7 @@
                 }
             }
         },
-        'Player': function () {
+        Player: function () {
             if ($("#player-left").length) {
                 var PlayerLeft = $("#player-left");
                 var PlayerSide = $("#player-sidebar");
@@ -545,44 +545,6 @@
                 MyTheme.Link.Copy.Set(this, downurl);
             });
         },
-        Language: function () {
-            String.prototype.s2t = function () {
-                var k = ''; for (var i = 0; i < this.length; i++) {
-                    var c = this.charAt(i); var p = simple().indexOf(c)
-                    k += p < 0 ? c : traditional().charAt(p);
-                }
-                return k;
-            }
-            String.prototype.t2s = function () {
-                var k = ''; for (var i = 0; i < this.length; i++) {
-                    var c = this.charAt(i); var p = traditional().indexOf(c)
-                    k += p < 0 ? c : simple().charAt(p);
-                }
-                return k;
-            }
-            function s2t() { document.body.innerHTML = document.body.innerHTML.s2t(); }
-            function t2s() { document.body.innerHTML = document.body.innerHTML.t2s(); }
-            var language = MyTheme.Cookie.Get('language') || myui.language; if (language == 1) {
-                s2t();
-            } else {
-                t2s();
-            }
-            $('.language').click(function () {
-                if (language == 0) {
-                    layer.msg("正在切换繁体，请稍后...", { anim: 5, time: 2000 }, function () {
-                        s2t();
-                        window.location.reload();
-                    });
-                    MyTheme.Cookie.Set('language', 1, 365);
-                } else {
-                    layer.msg("正在切换简体，请稍后...", { anim: 5, time: 2000 }, function () {
-                        t2s();
-                        window.location.reload();
-                    });
-                    MyTheme.Cookie.Set('language', 0, 365);
-                }
-            });
-        }
     }
 };
 $(function () {
@@ -603,5 +565,5 @@ $(function () {
     MyTheme.Other.History.Init();
     MyTheme.Other.Player();
     MyTheme.Other.Close();
-    MyTheme.Other.Xunlei();
+    //MyTheme.Other.Xunlei();
 });

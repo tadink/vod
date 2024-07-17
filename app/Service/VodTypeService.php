@@ -14,6 +14,8 @@ namespace App\Service;
 
 use App\Model\VodType;
 
+use function Hyperf\Support\retry;
+
 class VodTypeService
 {
     public function vodTypeChildren($parentId, $vodTypes): array
@@ -31,7 +33,25 @@ class VodTypeService
 
     public function vodTypeTree(): array
     {
-        $vodTypes = VodType::all();
+        $vodTypes = VodType::query()->with(['parent'])->get();
         return $this->vodTypeChildren(0, $vodTypes);
+    }
+
+    public function vodTypeById($typeId,$vodTypes){
+        $result=null;
+        foreach ($vodTypes as $k => $v) {
+            if ($v->id == $typeId) {
+                $result= $v;
+                break;
+            }else{
+                $type= $this->vodTypeById($typeId,$v->children);
+                if ($type){
+                    $result= $type;
+                    break;
+                }
+            }
+
+        }
+        return $result;
     }
 }

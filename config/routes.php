@@ -18,6 +18,7 @@ Router::get('/favicon.ico', function () {
     return '';
 });
 Router::get('/vodtype/{type_id}', [IndexController::class, 'vodType']);
+Router::get('/vod_detail/{vod_id}', [IndexController::class, 'detail']);
 Router::get('/captcha', [IndexController::class, 'captcha']);
 Router::get('/login', [IndexController::class, 'loginView']);
 Router::post('/login', [IndexController::class, 'login']);

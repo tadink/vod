@@ -3,27 +3,26 @@
         <div class="row">
             <div class="myui-header_bd clearfix">
                 <div class="myui-header__logo">
-                    <a class="logo" href="https://www.duboku.tv/">
-                        <img class="img-responsive hidden-xs" src="./static/logo.png">
-                        <img class="img-responsive visible-xs" src="./static/logo_min.png">
+                    <a class="logo" href="/">
+                        <img class="img-responsive hidden-xs" src="/static/logo.png">
+                        <img class="img-responsive visible-xs" src="/static/logo_min.png">
                     </a>
                 </div>
                 <ul class="myui-header__menu nav-menu">
-                    <li class=" active hidden-sm hidden-xs"><a href="https://www.duboku.tv/">首页</a></li>
+                    <li class=" @if(!isset($topType)) active @endif hidden-sm hidden-xs"><a href="/">首页</a></li>
                     @foreach ($types as $type)
-                        <li class=" hidden-sm hidden-xs"><a
-                                href="vodtype/{{ $type->id }}">{{ $type->name }}</a></li>
+                        <li class="@if(isset($topType)&&$topType->id==$type->id) active @endif hidden-sm hidden-xs"><a href="/vodtype/{{ $type->id }}">{{ $type->name }}</a></li>
                     @endforeach
                     <li class="dropdown-hover visible-sm visible-xs">
                         <a href="javascript:;">频道 <i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-box bottom fadeInDown clearfix">
                             <ul class="item nav-list clearfix">
                                 <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a
-                                        class="btn btn-sm btn-block btn-warm" href="https://www.duboku.tv/">首页</a>
+                                        class="btn btn-sm btn-block @if(isset($topType)) btn-default @else btn-warm @endif " href="/">首页</a>
                                 </li>
                                 @foreach ($types as $type)
                                     <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a
-                                            class="btn btn-sm btn-block btn-default"
+                                            class="btn btn-sm btn-block @if(isset($topType)&&$topType->id==$type->id) btn-warm @else btn-default @endif "
                                             href="/vodtype/{{ $type->id }}">{{ $type->name }}</a></li>
                                 @endforeach
 
@@ -31,7 +30,7 @@
                         </div>
                     </li>
                 </ul>
-                <script type="text/javascript" src="./static/jquery.autocomplete.js"></script>
+                <script type="text/javascript" src="/static/jquery.autocomplete.js"></script>
                 <div class="myui-header__search search-box">
                     <form id="search" name="search" method="get"
                         action="https://www.duboku.tv/vodsearch/-------------.html" onsubmit="return qrsearch();">

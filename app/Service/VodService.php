@@ -15,7 +15,6 @@ namespace App\Service;
 use App\Model\Vod;
 use App\Model\VodType;
 use Hyperf\Database\Model\Builder;
-use Hyperf\DbConnection\Db;
 
 class VodService
 {
@@ -30,13 +29,15 @@ class VodService
         $query = $this->parseQuery($parameters);
         $limit = $parameters['limit'] ?? 20;
         $page = $parameters['page'] ?? 1;
-        return $query->paginate($limit, ['*'], 'page', $page);
+        /**
+         * @var Hyperf\Paginator\LengthAwarePaginator $paginator
+         */
+        $paginator= $query->paginate($limit, ['*'], 'page', $page);
+
+        return $paginator;
     }
 
-    public function allVodLanguage()
-    {
-        return Db::table('vod')->select([Db::raw('distinct language')])->get();
-    }
+
 
     private function parseQuery($parameters): Builder
     {
@@ -53,6 +54,12 @@ class VodService
                     $vodIds = array_merge((array) $v[1], $vodIds->toArray());
                     $query->whereIn('type_id', $vodIds);
                 }
+                continue;
+            }
+            if (in_array($k, ['actors', 'directors', 'classes'])) {
+                $query->whereHas($k, function (Builder $query)use($v) {
+                    $query->where('name', $v[0], $v[1]);
+                });
                 continue;
             }
 
@@ -85,5 +92,22 @@ class VodService
         $limit = $parameters['limit'] ?? 10;
         $page = $parameters['page'] ?? 1;
         return $query->forPage($page, $limit);
+    }
+
+
+    public function vodDetail($vodId)
+    {
+        return Vod::query()->where("id", "=", $vodId)->with(['directors', 'actors', 'play_urls', 'type'])->first();
+    }
+
+    public function highScoreVods($typeId)
+    {
+        return Vod::query()
+            ->with(['actors', 'directors', 'type'])
+            ->where("type_id", "=", $typeId)
+            ->orderByDesc("score")
+            ->orderByDesc("vod_time")
+            ->limit(15)
+            ->get();
     }
 }

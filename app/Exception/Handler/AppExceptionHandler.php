@@ -15,6 +15,7 @@ namespace App\Exception\Handler;
 use Hyperf\Context\ApplicationContext;
 use Hyperf\Context\RequestContext;
 use Hyperf\ExceptionHandler\ExceptionHandler;
+use Hyperf\HttpMessage\Exception\NotFoundHttpException;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Hyperf\Logger\LoggerFactory;
 use Psr\Http\Message\ResponseInterface;
@@ -25,18 +26,20 @@ class AppExceptionHandler extends ExceptionHandler
 {
     protected LoggerInterface $logger;
 
-    public function __construct()
+    public function __construct(LoggerFactory $loggerFactory)
     {
-        $this->logger = ApplicationContext::getContainer()->get(LoggerFactory::class)->get('error', 'default');
+        $this->logger = $loggerFactory->get('error', 'default');
     }
 
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
+     
+        if($throwable instanceof NotFoundHttpException){
+            return $response->withStatus(404)->withBody(new SwooleStream('404'));
+        }
         $request = RequestContext::get();
         $uri = $request->getUri()->__toString();
         $this->logger->error(sprintf('%s[%s] in %s %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile(), $uri));
-        // $this->logger->error($throwable->getTraceAsString());
-
         return $response->withHeader('Server', 'Hyperf')->withStatus(500)->withBody(new SwooleStream('Internal Server Error.'));
     }
 

@@ -228,7 +228,7 @@
                             @foreach ($vods as $vod)
                                 <li class="col-lg-8  col-md-8 col-sm-4 col-xs-3">
                                     <div class="myui-vodlist__box">
-                                        <a class="myui-vodlist__thumb lazyload" href="/voddetail/{{ $vod->id }}"
+                                        <a class="myui-vodlist__thumb lazyload" href="/vod_detail/{{ $vod->id }}"
                                             title="{{ $vod->name }}" data-original="{{ $vod->pic }}">
                                             <span class="play hidden-xs"></span>
                                             <span class="pic-tag pic-tag-top">
@@ -237,7 +237,7 @@
                                             </span>
                                             <span class="pic-text text-right">{{ $vod->remark }}</span> </a>
                                         <div class="myui-vodlist__detail">
-                                            <h4 class="title text-overflow"><a href="/voddetail/{{ $vod->id }}"
+                                            <h4 class="title text-overflow"><a href="/vod_detail/{{ $vod->id }}"
                                                     title="{{ $vod->name }}">{{ $vod->name }}</a></h4>
                                             <p class="text text-overflow text-muted hidden-xs">
                                                 {{ $vod->actors->implode('name', ',') }}
@@ -276,7 +276,7 @@
                                     <li class="col-lg-9 col-md-6 col-sm-4 col-xs-3">
                                         <div class="myui-vodlist__box">
                                             <a class="myui-vodlist__thumb lazyload"
-                                                href="/voddetail/{{ $vod->id }}" title="{{ $vod->name }}"
+                                                href="/vod_detail/{{ $vod->id }}" title="{{ $vod->name }}"
                                                 data-original="{{ $vod->pic }}">
                                                 <span class="play hidden-xs"></span>
                                                 <span class="pic-tag pic-tag-top">
@@ -286,7 +286,7 @@
                                                 <span class="pic-text text-right">{{ $vod->remark }}</span> </a>
                                             <div class="myui-vodlist__detail">
                                                 <h4 class="title text-overflow"><a
-                                                        href="/voddetail/{{$vod->id}}"
+                                                        href="/vod_detail/{{$vod->id}}"
                                                         title="{{ $vod->name }}">{{ $vod->name }}</a></h4>
                                                 <p class="text text-overflow text-muted hidden-xs">
                                                     {{ $vod->actors->implode('name', ',') }}

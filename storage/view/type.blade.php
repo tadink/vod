@@ -28,15 +28,13 @@
             "mob_status": "0"
         };
         var myui = {
-            "tpl": "/template/mytheme/",
+            "tpl": "/static/",
             "shortapi": "",
-            "bdapi": "http://bdimg.share.baidu.com/static/api/js/share.js",
             "thunderurl": "",
             "language": "0"
         };
     </script>
     <script type="text/javascript" src="/static/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/layer.js"></script>
     <link rel="stylesheet" href="/static/layer.css" id="layuicss-layer">
     <script type="text/javascript" src="/static/mytheme-site.js"></script>
     <script type="text/javascript" src="/static/mytheme-ui.js"></script>
@@ -69,7 +67,7 @@
         .myui-vodlist__thumb {
             border-radius: 5px;
             padding-top: 150%;
-            background: url(/template/mytheme/statics/image/20200420/d31516e51.png) no-repeat;
+            background: url(/static/d31516e51.png) no-repeat;
         }
 
         .myui-vodlist__thumb.square {
@@ -214,252 +212,101 @@
                 <div class="myui-panel-box clearfix">
                     <div class="myui-panel_hd">
                         <div class="myui-panel__head active bottom-line clearfix">
-                            <a class="slideDown-btn more pull-right" href="javascript:;">收起 <i
-                                    class="fa fa-angle-up"></i></a>
-                            <h3 class="title">
-                                连续剧 </h3>
-                            <a class="more text-muted" href="https://www.duboku.tv/vodshow/2-----------.html">筛选</a>
+                            <a class="slideDown-btn more pull-right" href="javascript:;">收起 <i class="fa fa-angle-up"></i></a>
+                            <h3 class="title"> {{$currentType->name}} </h3>
                         </div>
                     </div>
                     <div class="myui-panel_bd">
                         <div class="slideDown-box">
-                            <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                                <li>
-                                    <a class="text-muted btn">类型</a>
-                                </li>
-                                <li><a class="btn btn-warm"
-                                        href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/13-----------.html">陆剧</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/15-----------.html">日韩剧</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/21-----------.html">短剧</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/14-----------.html">台泰剧</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/20-----------.html">港剧</a>
-                                </li>
-                            </ul>
-                            <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                                <li>
-                                    <a class="btn text-muted">剧情</a>
-                                </li>
-                                <li><a class="btn btn-warm"
-                                        href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E6%82%AC%E7%96%91--------.html">悬疑</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E6%AD%A6%E4%BE%A0--------.html">武侠</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E7%A7%91%E5%B9%BB--------.html">科幻</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E9%83%BD%E5%B8%82--------.html">都市</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E7%88%B1%E6%83%85--------.html">爱情</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%8F%A4%E8%A3%85--------.html">古装</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E6%88%98%E4%BA%89--------.html">战争</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E9%9D%92%E6%98%A5--------.html">青春</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%81%B6%E5%83%8F--------.html">偶像</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%96%9C%E5%89%A7--------.html">喜剧</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%AE%B6%E5%BA%AD--------.html">家庭</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E7%8A%AF%E7%BD%AA--------.html">犯罪</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%A5%87%E5%B9%BB--------.html">奇幻</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%89%A7%E6%83%85--------.html">剧情</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E4%B9%A1%E6%9D%91--------.html">乡村</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%B9%B4%E4%BB%A3--------.html">年代</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E8%AD%A6%E5%8C%AA--------.html">警匪</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E8%B0%8D%E6%88%98--------.html">谍战</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%86%92%E9%99%A9--------.html">冒险</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E7%BD%AA%E6%A1%88--------.html">罪案</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2---%E5%AE%AB%E5%BB%B7--------.html">宫廷</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2---BL--------.html">BL</a>
-                                </li>
-                            </ul>
-                            <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                                <li>
-                                    <a class="btn text-muted">地区</a>
-                                </li>
-                                <li><a class="btn btn-warm"
-                                        href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E5%86%85%E5%9C%B0----------.html">内地</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E9%9F%A9%E5%9B%BD----------.html">韩国</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E9%A6%99%E6%B8%AF----------.html">香港</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E5%8F%B0%E6%B9%BE----------.html">台湾</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E7%BE%8E%E5%9B%BD----------.html">美国</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E8%8B%B1%E5%9B%BD----------.html">英国</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E5%B7%B4%E8%A5%BF----------.html">巴西</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E6%B3%B0%E5%9B%BD----------.html">泰国</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E6%B3%95%E5%9B%BD----------.html">法国</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E6%97%A5%E6%9C%AC----------.html">日本</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-%E6%96%B0%E5%8A%A0%E5%9D%A1----------.html">新加坡</a>
-                                </li>
-                            </ul>
-                            <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                                <li>
-                                    <a class="btn text-muted">年份</a>
-                                </li>
-                                <li><a class="btn btn-warm"
-                                        href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2024.html">2024</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2023.html">2023</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2022.html">2022</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2021.html">2021</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2020.html">2020</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2019.html">2019</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2018.html">2018</a></li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----------2017.html">2017</a></li>
-                            </ul>
-                            <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                                <li>
-                                    <a class="btn text-muted">语言</a>
-                                </li>
-                                <li><a class="btn btn-warm"
-                                        href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                @foreach($languages as $language)
-                                    <li><a class="btn"
-                                           href="https://www.duboku.tv/vodshow/2----%E5%9B%BD%E8%AF%AD-------.html">{{$language->language}}</a>
+                            @if (!empty($currentType->children))
+                                <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+                                    <li>
+                                        <a class="text-muted btn">类型</a>
                                     </li>
-                                @endforeach
-                            </ul>
-                            <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                                <li>
-                                    <a class="btn text-muted">字母</a>
-                                </li>
-                                <li><a class="btn btn-warm"
-                                        href="https://www.duboku.tv/vodshow/2-----------.html">全部</a></li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----A------.html">A</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----B------.html">B</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----C------.html">C</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----D------.html">D</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----E------.html">E</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----F------.html">F</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----G------.html">G</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----H------.html">H</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----I------.html">I</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----J------.html">J</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----K------.html">K</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----L------.html">L</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----M------.html">M</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----N------.html">N</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----O------.html">O</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----P------.html">P</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----Q------.html">Q</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----R------.html">R</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----S------.html">S</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----T------.html">T</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----U------.html">U</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----V------.html">V</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----W------.html">W</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----X------.html">X</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----Y------.html">Y</a>
-                                </li>
-                                <li><a class="btn" href="https://www.duboku.tv/vodshow/2-----Z------.html">Z</a>
-                                </li>
-                                <li><a class="btn"
-                                        href="https://www.duboku.tv/vodshow/2-----0-9------.html">0-9</a></li>
-                            </ul>
+                                    <li><a class="btn  href="/vodtype/{{$currentType->id}}">全部</a></li>
+                                    @foreach ($currentType->children as $child)
+                                        <li><a class="btn"
+                                                href="/vodtype/{{$child->id}}">{{ $child->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+
+
+                            @if (!empty($filter['classes']))
+                                <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+                                    <li>
+                                        <a class="btn text-muted">剧情</a>
+                                    </li>
+                                    <li><a class="btn  @if(empty($queryVars['class'])) btn-warm @endif" href="{{makeUrl(['class'=>null])}}">全部</a></li>
+                                    @foreach ($filter['classes'] as $class)
+                                        <li><a class="btn @if(!empty($queryVars['class'])&&$queryVars['class']==$class) btn-warm @endif"
+                                                href="{{makeUrl(['class'=>$class])}}">{{ $class }}</a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            @endif
+                            @if (!empty($filter['areas']))
+                                <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+                                    <li>
+                                        <a class="btn text-muted">地区</a>
+                                    </li>
+                                    <li><a class="btn @if(empty($queryVars['area'])) btn-warm @endif"
+                                            href="{{makeUrl(['area'=>null])}}">全部</a></li>
+                                    @foreach ($filter['areas'] as $area)
+                                        <li><a class="btn @if(!empty($queryVars['area'])&&$queryVars['area']==$area) btn-warm @endif"
+                                                href="{{makeUrl(['area'=>$area])}}">{{ $area }}</a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            @endif
+                            @if (!empty($filter['years']))
+                                <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+                                    <li>
+                                        <a class="btn text-muted">年份</a>
+                                    </li>
+                                    <li><a class="btn @if(empty($queryVars['year'])) btn-warm @endif"
+                                            href="{{makeUrl(['year'=>null])}}">全部</a></li>
+                                    @foreach ($filter['years'] as $year)
+                                        <li><a class="btn @if(!empty($queryVars['year'])&&$queryVars['year']==$year) btn-warm @endif"
+                                                href="{{makeUrl(['year'=>$year])}}">{{ $year }}</a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            @endif
+                            @if (!empty($filter['languages']))
+                                <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+                                    <li>
+                                        <a class="btn text-muted">语言</a>
+                                    </li>
+                                    <li><a class="btn @if(empty($queryVars['language'])) btn-warm @endif"
+                                            href="{{makeUrl(['language'=>null])}}">全部</a></li>
+                                    @foreach ($filter['languages'] as $language)
+                                        <li><a class="btn @if(!empty($queryVars['language'])&&$queryVars['language']==$language) btn-warm @endif"
+                                                href="{{makeUrl(['language'=>$language])}}">{{ $language }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                            @if (!empty($filter['letters']))
+                                <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+                                    <li>
+                                        <a class="btn text-muted">字母</a>
+                                    </li>
+                                    <li><a class="btn @if(empty($queryVars['letter'])) btn-warm @endif"
+                                            href="{{makeUrl(['letter'=>null])}}">全部</a></li>
+                                    @foreach ($filter['letters'] as $letter)
+                                        <li><a class="btn  @if(!empty($queryVars['letter'])&&$queryVars['letter']==$letter) btn-warm @endif"
+                                                href="{{makeUrl(['letter'=>$letter])}}">{{ $letter }}</a>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            @endif
                         </div>
-                        <ul class="myui-screen__list nav-slide clearfix" data-align="left">
-                            <li>
-                                <a class="btn text-muted">排序</a>
-                            </li>
-                            <li><a class="btn btn-warm"
-                                    href="https://www.duboku.tv/vodshow/2--time---------.html">时间</a></li>
-                            <li><a class="btn" href="https://www.duboku.tv/vodshow/2--hits---------.html">人气</a>
-                            </li>
-                            <li><a class="btn" href="https://www.duboku.tv/vodshow/2--score---------.html">评分</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -472,7 +319,7 @@
                             @foreach ($paginate->items() as $vod)
                                 <li class="col-lg-8 col-md-6 col-sm-4 col-xs-3">
                                     <div class="myui-vodlist__box">
-                                        <a class="myui-vodlist__thumb lazyload" href="/voddetail{{ $vod->id }}"
+                                        <a class="myui-vodlist__thumb lazyload" href="/vod_detail/{{ $vod->id }}"
                                             title="{{ $vod->name }}" data-original="{{ $vod->pic }}">
                                             <span class="play hidden-xs"></span>
                                             <span class="pic-tag pic-tag-top">
@@ -481,7 +328,7 @@
                                             </span>
                                             <span class="pic-text text-right">{{ $vod->remark }}</span> </a>
                                         <div class="myui-vodlist__detail">
-                                            <h4 class="title text-overflow"><a href="/voddetail/{{ $vod->id }}"
+                                            <h4 class="title text-overflow"><a href="/vod_detail/{{ $vod->id }}"
                                                     title="{{ $vod->name }}">{{ $vod->name }}</a></h4>
                                             <p class="text text-overflow text-muted hidden-xs">
                                                 {{ $vod->actors->implode('name', ',') }}</p>
@@ -493,14 +340,15 @@
                     </div>
                 </div>
             </div>
-            @if ($paginate->lastPage() > 1)
+
+            @if ($paginate->lastPage() >= $paginate->currentPage())
                 @php
                     $start = 1;
                     $end = 5;
                     if ($paginate->currentPage() < 3) {
                         $end = min($end, $paginate->lastPage());
                     } elseif ($paginate->currentPage() > $paginate->lastPage() - 3) {
-                        $start = $paginate->lastPage() - 4;
+                        $start = max($paginate->lastPage() - 4,1);
                         $end = $paginate->lastPage();
                     } else {
                         $start = $paginate->currentPage() - 2;
@@ -571,8 +419,7 @@
                             <input type="password" class="form-control" name="user_pwd" placeholder="登录密码">
                         </p>
                         <p>
-                            <img class="mac_verify_img pull-right" src="/static/index.html" height="35"
-                                onclick="this.src = this.src+&#39;?&#39;">
+                            <img class="mac_verify_img pull-right" src="" height="35">
                             <input type="text" class="form-control" name="verify" placeholder="验证码"
                                 style="display: inline-block; width: 100px;">
                         </p>
@@ -589,9 +436,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        MyTheme.Other.Language();
-    </script>
     <script type="text/javascript">
         MyTheme.Other.Skin();
     </script>
