@@ -3,5 +3,7 @@ vendor/
 public/upload
 public/view
 public/img1
+public/img3
+public/view
 runtime/
 .env

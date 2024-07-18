@@ -24,16 +24,13 @@ class VodService
         return $query->get();
     }
 
-    public function vodsPagination(array $parameters)
+    public function vodsPagination(array $parameters,array $queryVars)
     {
         $query = $this->parseQuery($parameters);
         $limit = $parameters['limit'] ?? 20;
         $page = $parameters['page'] ?? 1;
-        /**
-         * @var Hyperf\Paginator\LengthAwarePaginator $paginator
-         */
         $paginator= $query->paginate($limit, ['*'], 'page', $page);
-
+        $paginator->appends($queryVars);
         return $paginator;
     }
 
@@ -86,7 +83,9 @@ class VodService
             $not = ! empty($v[2]['not']) ? true : false;
             $query->where($k, $v[0], $v[1], $boolean, $not);
         }
-        foreach ($parameters['order'] ?? [] as $order) {
+
+
+        foreach ($parameters['order'] ?? [['vod_time','desc'],['score','desc']] as $order) {
             $query->orderBy($order[0], $order[1]);
         }
         $limit = $parameters['limit'] ?? 10;

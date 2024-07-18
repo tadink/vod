@@ -9,21 +9,21 @@
                     </a>
                 </div>
                 <ul class="myui-header__menu nav-menu">
-                    <li class=" @if(!isset($topType)) active @endif hidden-sm hidden-xs"><a href="/">首页</a></li>
+                    <li class=" @if(empty($topType)) active @endif hidden-sm hidden-xs"><a href="/">首页</a></li>
                     @foreach ($types as $type)
-                        <li class="@if(isset($topType)&&$topType->id==$type->id) active @endif hidden-sm hidden-xs"><a href="/vodtype/{{ $type->id }}">{{ $type->name }}</a></li>
+                        <li class="@if(!empty($topType)&&$topType->id==$type->id) active @endif hidden-sm hidden-xs"><a href="/typevod/{{ $type->id }}">{{ $type->name }}</a></li>
                     @endforeach
                     <li class="dropdown-hover visible-sm visible-xs">
                         <a href="javascript:;">频道 <i class="fa fa-angle-down"></i></a>
                         <div class="dropdown-box bottom fadeInDown clearfix">
                             <ul class="item nav-list clearfix">
                                 <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a
-                                        class="btn btn-sm btn-block @if(isset($topType)) btn-default @else btn-warm @endif " href="/">首页</a>
+                                        class="btn btn-sm btn-block @if(!empty($topType)) btn-default @else btn-warm @endif " href="/">首页</a>
                                 </li>
                                 @foreach ($types as $type)
                                     <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a
-                                            class="btn btn-sm btn-block @if(isset($topType)&&$topType->id==$type->id) btn-warm @else btn-default @endif "
-                                            href="/vodtype/{{ $type->id }}">{{ $type->name }}</a></li>
+                                            class="btn btn-sm btn-block @if(!empty($topType)&&$topType->id==$type->id) btn-warm @else btn-default @endif "
+                                            href="/typevod/{{ $type->id }}">{{ $type->name }}</a></li>
                                 @endforeach
 
                             </ul>

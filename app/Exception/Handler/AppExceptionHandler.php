@@ -39,6 +39,7 @@ class AppExceptionHandler extends ExceptionHandler
         }
         $request = RequestContext::get();
         $uri = $request->getUri()->__toString();
+        
         $this->logger->error(sprintf('%s[%s] in %s %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile(), $uri));
         return $response->withHeader('Server', 'Hyperf')->withStatus(500)->withBody(new SwooleStream('Internal Server Error.'));
     }

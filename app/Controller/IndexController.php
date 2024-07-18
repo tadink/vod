@@ -13,21 +13,19 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Vod;
-use App\Model\VodType;
 use App\Service\VodService;
 use App\Service\VodTypeService;
 use Hyperf\Context\ApplicationContext;
 use Hyperf\Context\ResponseContext;
 use Hyperf\Contract\SessionInterface;
+use Hyperf\HttpMessage\Exception\NotFoundHttpException;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\Logger\LoggerFactory;
 use Hyperf\Session\SessionProxy;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\ViewEngine\Contract\ViewInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
-use Psr\Log\LoggerInterface;
 
 use function Hyperf\Config\config;
 use function Hyperf\ViewEngine\view;
@@ -36,110 +34,19 @@ class IndexController
 {
     private SessionProxy $session;
 
-    private LoggerInterface $logger;
+    
 
     public function __construct(SessionInterface $session, ContainerInterface $container)
     {
         $this->session = $session;
-        $this->logger = $container->get(LoggerFactory::class)->get('app', 'default');
     }
 
-    public function index(RequestInterface $request): ViewInterface
-    {
-        $vodTypes = (new VodTypeService())->vodTypeTree();
-        $vods = Vod::query()->with(['actors'])->orderbyDesc('vod_time')->limit(8)->get();
-        return view('index', ['types' => $vodTypes, 'vods' => $vods]);
-    }
+    
 
-    public function vodType(RequestInterface $request): ViewInterface
-    {
-        $filter = config('vod.filter');
-        $typeId = (int)$request->route('type_id');
-        $page = (int) $request->input('page', 1);
-        $language = $request->input('language');
-        $area = $request->input('area');
-        $year = $request->input('year');
-        $letter = $request->input('letter');
-        $class = $request->input('class');
+   
 
-        $vodTypeService = new VodTypeService();
-        $vodTypes = $vodTypeService->vodTypeTree();
-        $currentType = $vodTypeService->vodTypeById($typeId, $vodTypes);
-        $topType = $currentType->parent ?? $currentType;
-
-        $vodService = new VodService();
-        $where = [
-            'type_id' => ['=', $typeId],
-        ];
-        if ($language) {
-            $where['language'] = ['=', $language];
-        }
-        if ($area) {
-            $where['area'] = ['=', $area];
-        }
-        if ($year) {
-            $where['year'] = ['=', $year];
-        }
-        if ($letter) {
-            if ($letter == "1-9") {
-                $where['letter'] = ['between', [1, 9]];
-            } else {
-                $where['letter'] = ['=', $letter];
-            }
-        }
-        if ($class) {
-            $where['classes'] = ['=', $class];
-        }
-        $queryVars = [
-            'class' => $class,
-            'language' => $language,
-            'area' => $area,
-            'year' => $year,
-            'letter' => $letter
-        ];
-        $paginate = $vodService->vodsPagination(['where' => $where, 'page' => $page, 'limit' => 50, 'with' => ['actors']]);
-        $paginate->appends($queryVars);
-
-        return view('type', [
-            'types' => $vodTypes,
-            'paginate' => $paginate,
-            'filter' => $filter,
-            'currentType' => $currentType,
-            'topType' => $topType,
-            'queryVars' => $queryVars
-        ]);
-    }
-
-    public function detail(RequestInterface $request): ViewInterface
-    {
-        $vodId = (int)$request->route('vod_id');
-        $vodTypeService = new VodTypeService();
-        $vodTypes = $vodTypeService->vodTypeTree();
-        $vodService = new VodService();
-        $vod = $vodService->vodDetail($vodId);
-        $currentType = $vod->type;
-        $topType = $currentType->parent ?? $currentType;
-        $highScoreList = $vodService->highScoreVods($vod->type_id);
-        return view('detail', ['types' => $vodTypes, 'highScoreList' => $highScoreList, 'vod' => $vod, 'topType' => $topType,  'currentType' => $currentType]);
-    }
-
-    public function play(RequestInterface $request): MessageResponseInterface|ViewInterface
-    {
-        $vodId = (int) $request->route('vod_id');
-        $urlId = (int) $request->route('url_id');
-        if (! $vodId || ! $urlId) {
-            return response()->redirect('/');
-        }
-        $vod = Vod::query()->where('id', $vodId)->with(['play_urls'])->first();
-        if (! $vod) {
-            return response()->redirect('/');
-        }
-        $vodTypes = VodType::vodTypes();
-        $currentUrl = $vod->play_urls->filter(function ($item) use ($urlId) {
-            return $item->id === $urlId;
-        })->first();
-        return view('play', ['vod' => $vod, 'current' => $currentUrl, 'types' => $vodTypes]);
-    }
+    
+    
 
     public function loginView(): ViewInterface
     {

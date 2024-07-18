@@ -32,6 +32,6 @@ class Log
     }
     public static function __callStatic($name, $arguments)
     {
-        return Log::get()->$name($arguments);
+        return Log::get()->$name(...$arguments);
     }
 }

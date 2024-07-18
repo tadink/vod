@@ -2,7 +2,7 @@
 
 namespace App\Paginator;
 
-use function Hyperf\Support\retry;
+use App\Log\Log;
 
 class LengthAwarePaginator extends \Hyperf\Paginator\LengthAwarePaginator
 {
@@ -32,20 +32,18 @@ class LengthAwarePaginator extends \Hyperf\Paginator\LengthAwarePaginator
         if ($this->lastPage() < $this->currentPage()) {
             return "";
         }
-        $pageitem = '';
+        $pageItem = '';
         for ($i = $start; $i <= $end; $i++) {
             $class = $i == $this->currentPage() ? 'btn-warm' : 'btn-default';
-            $pageitem .= "<li class=\"hidden-xs\"><a class=\"btn  {$class}\" href=\"{$this->url($i)}\">{$i}</a> </li>";
+            $pageItem .= "<li class=\"hidden-xs\"><a class=\"btn  {$class}\" href=\"{$this->url($i)}\">{$i}</a> </li>";
         }
-
-
+    
         return <<<PAGE
                 <ul class="myui-page text-center clearfix">
                     <li><a class="btn btn-default" href="{$this->url(1)}">首页</a></li>
                     <li><a class="btn btn-default" href="{$this->previousPageUrl()}">上一页</a></li>
                     {$pageItem}
-                    <li class="visible-xs"><a
-                            class="btn btn-warm">{$this->currentPage()}/{$this->lastPage()}</a></li>
+                    <li class="visible-xs"><a class="btn btn-warm">{$this->currentPage()}/{$this->lastPage()}</a></li>
                     <li><a class="btn btn-default" href="{$this->nextPageUrl()}">下一页</a></li>
                     <li><a class="btn btn-default" href="{$this->url($this->lastPage())}">尾页</a></li>
                 </ul>
