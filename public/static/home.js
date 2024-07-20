@@ -958,11 +958,9 @@ var MAC = {
 }
 $(function () {
     MAC.Image.Lazyload.Show();
-    MAC.Adaptive();
     MAC.Verify.Init();
     MAC.PageGo.Init();
     MAC.User.Init();
-    MAC.Qrcode.Init();
     MAC.Digg.Init();
     MAC.Score.Init();
     MAC.Star.Init();

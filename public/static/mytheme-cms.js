@@ -7,7 +7,11 @@
         Init: function () {
             $('body').on('click', '.my_comment_submit', function (e) {
                 if ($(this).parent().parent().parent().find(".comment_data").val() == '') {
-                    layer.msg("请输入评论内容");
+                    Swal.fire({
+                        text: '请输入评论内容',
+                        icon: 'warning',
+                        showComfirmButton:false
+                      })
                     return false;
                 }
                 Myui.Comment.Submit();
@@ -18,7 +22,13 @@
                     MyTheme.Ajax(maccms.path + '/index.php/comment/report.html?id=' + $that.attr("data-id"), 'get', 'json', '',
                         function (r) {
                             $that.addClass('disabled');
-                            layer.msg(r.msg);
+                            Swal.fire({
+                                text: r.msg,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                scrollbarPadding: false,
+                                heightAuto: false, 
+                            });
                         });
                 }
             });
@@ -45,7 +55,14 @@
                 if ($(this).attr("data-id")) {
                     MyTheme.Ajax(maccms.path + '/index.php/comment/report.html?id=' + $that.attr("data-id"), 'get', 'json', '', function (r) {
                         $that.addClass('disabled');
-                        layer.msg(r.msg);
+                        Swal.fire({
+                            text: r.msg,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            scrollbarPadding: false,
+                            heightAuto: false, 
+                        });
+                        
                     });
                 }
             });
@@ -63,7 +80,13 @@
             MyTheme.Ajax(maccms.path + '/index.php/comment/saveData', 'post', 'json', $(".comment_form").serialize() + '&comment_mid=' + $('.myui_comment').attr('data-mid') + '&comment_rid=' + $('.myui_comment').attr('data-id'), function (r) {
                 if (r.code == 1) { layer.msg(r.msg, { anim: 5 }, function () { Myui.Comment.Show(1); }); } else {
                     if (MAC.Gbook.Verify == 1) { $('#verify_img').click(); }
-                    layer.msg(r.msg);
+                    Swal.fire({
+                        text: r.msg,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        scrollbarPadding: false,
+                        heightAuto: false, 
+                    });
                 }
             });
         }
@@ -83,6 +106,13 @@
                         $('#verify_img').click();
 
                     }
+                    Swal.fire({
+                        text: r.msg,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        scrollbarPadding: false,
+                        heightAuto: false, 
+                    });
                     layer.msg(r.msg);
                 }
             });

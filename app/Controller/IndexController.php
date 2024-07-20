@@ -12,41 +12,30 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Vod;
-use App\Service\VodService;
-use App\Service\VodTypeService;
-use Hyperf\Context\ApplicationContext;
 use Hyperf\Context\ResponseContext;
 use Hyperf\Contract\SessionInterface;
-use Hyperf\HttpMessage\Exception\NotFoundHttpException;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Session\SessionProxy;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\ViewEngine\Contract\ViewInterface;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
-
-use function Hyperf\Config\config;
 use function Hyperf\ViewEngine\view;
 
 class IndexController
 {
-    private SessionProxy $session;
+    /**
+     * @var SessionProxy $session
+     */
+    private SessionInterface $session;
 
-    
+    private ValidatorFactoryInterface $validatorFactory;
 
-    public function __construct(SessionInterface $session, ContainerInterface $container)
+    public function __construct(SessionInterface $session, ValidatorFactoryInterface $validatorFactory)
     {
         $this->session = $session;
+        $this->validatorFactory = $validatorFactory;
     }
-
-    
-
-   
-
-    
-    
 
     public function loginView(): ViewInterface
     {
@@ -59,18 +48,18 @@ class IndexController
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        $validator = ApplicationContext::getContainer()->get(ValidatorFactoryInterface::class)->make(
+        $validator = $this->validatorFactory->make(
             ['email' => $email, 'password' => $password],
-            ['email' => 'required|email|alpha', 'password' => 'required|alpha'],
-            ['email.required' => '请输入邮箱地址', 'email.alpha' => '邮箱不能包含特殊字符']
+            ['email' => 'required|email|alpha', 'password' => 'required'],
+            ['email.required' => '请输入邮箱地址', 'email.email' => '邮箱格式不正确', 'email.alpha' => '邮箱不能包含特殊字符']
         );
         if ($validator->fails()) {
             $this->session->flash('errors', $validator->errors());
             $this->session->flash('old', ['email' => $email]);
             return response()->redirect('/login');
         }
-
-        return response()->redirect('/login');
+        $redirectUrl = $this->session->previousUrl() ?? "/";
+        return response()->redirect($redirectUrl);
     }
 
     public function register(RequestInterface $request)
@@ -78,13 +67,29 @@ class IndexController
         $email = $request->input('email');
         $password = $request->input('password');
         $comfirmPassword = $request->input('comfirm_password');
-        $validator = ApplicationContext::getContainer()->get(ValidatorFactoryInterface::class)->make(
-            ['email' => $email, 'password' => $password],
-            ['email' => 'required|email', 'password' => 'required', 'comfirm_password' => 'required|same:password']
+        $validator = $this->validatorFactory->make(
+            ['email' => $email, 'password' => $password, 'comfirm_password' => $comfirmPassword],
+            [
+                'email' => 'required|email',
+                'password' => 'required',
+                'comfirm_password' => 'required|same:password',
+            ],
+            [
+                'email.required' => '请输入邮箱地址',
+                'email.email' => '邮箱格式不正确',
+                'password.required' => '请输入密码',
+                'comfirm_password.required' => '请确认密码',
+                'comfirm_password.same:password' => '两次密码不一致'
+            ]
         );
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()]);
+            $this->session->flash('errors', $validator->errors());
+            $this->session->flash('old', ['email' => $email]);
+            return response()->redirect('/register');
         }
+
+        $redirectUrl = $this->session->previousUrl() ?? "/";
+        return response()->redirect($redirectUrl);
     }
 
     public function captcha(RequestInterface $request): MessageResponseInterface

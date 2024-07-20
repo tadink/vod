@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace App\Exception\Handler;
 
+use App\Exception\BusinessException;
 use Hyperf\Context\ApplicationContext;
 use Hyperf\Context\RequestContext;
 use Hyperf\ExceptionHandler\ExceptionHandler;
@@ -36,6 +37,9 @@ class AppExceptionHandler extends ExceptionHandler
      
         if($throwable instanceof NotFoundHttpException){
             return $response->withStatus(404)->withBody(new SwooleStream('404'));
+        }
+        if($throwable instanceof BusinessException){
+            return $response->withStatus(200)->withBody(new SwooleStream($throwable->getMessage()));
         }
         $request = RequestContext::get();
         $uri = $request->getUri()->__toString();

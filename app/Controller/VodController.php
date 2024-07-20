@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-
+use App\Constants\ErrorCode;
 use App\Service\VodService;
 use App\Service\VodTypeService;
-use Hyperf\HttpMessage\Exception\NotFoundHttpException;
+use App\Util\Interceptor;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\ViewEngine\Contract\ViewInterface;
 use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
@@ -20,20 +20,22 @@ class VodController
     private VodTypeService $vodTypeService;
     public function __construct(VodService $vodService, VodTypeService $vodTypeService)
     {
-        $this->$vodService = $vodService;
+        $this->vodService = $vodService;
         $this->vodTypeService = $vodTypeService;
     }
 
     public function index(RequestInterface $request): ViewInterface
     {
-        $vodTypes = (new VodTypeService())->vodTypeTree();
+        $vodTypes = $this->vodTypeService->vodTypeTree();
         return view('index', ['types' => $vodTypes]);
     }
 
     public function typeVod(RequestInterface $request): ViewInterface
     {
-        $filter = config('vod.filter');
+        $filter = config('vod.filter',[]);
         $typeId = (int)$request->route('type_id');
+        Interceptor::ensureNotFalse($typeId > 0, ErrorCode::VOD_TYPE_ERROR);
+
         $page = (int) $request->input('page', 1);
         $language = $request->input('language');
         $area = $request->input('area');
@@ -70,9 +72,8 @@ class VodController
         $vodId = (int)$request->route('vod_id');
         $vodTypes = $this->vodTypeService->vodTypeTree();
         $vod = $this->vodService->vodDetail($vodId);
-        if (!$vod) {
-            throw new NotFoundHttpException("资源不存在");
-        }
+        Interceptor::ensureNotEmpty($vod,ErrorCode::VOD_NOT_EXISTS);
+       
         $currentType = $vod->type;
         $topType = $currentType->parent ?? $currentType;
         $highScoreList = $this->vodService->highScoreVods($vod->type_id);
@@ -89,33 +90,28 @@ class VodController
     {
         $vodId = (int) $request->route('vod_id');
         $urlId = (int) $request->route('url_id');
-        if (! $vodId || ! $urlId) {
-            return response()->redirect('/');
-        }
-        
+        Interceptor::ensureNotFalse($vodId>0,ErrorCode::VOD_ID_ERROR);
+        Interceptor::ensureNotFalse($urlId>0,ErrorCode::VOD_URL_ID_ERROR);
+
         $vod = $this->vodService->vodDetail($vodId);
-        if (! $vod) {
-            return response()->redirect('/');
-        }
+        Interceptor::ensureNotEmpty($vod,ErrorCode::VOD_NOT_EXISTS);
+        Interceptor::ensureNotFalse($vod->play_urls->isNotEmpty(),ErrorCode::VOD_URL_EMPTY);
+
         $currentType = $vod->type;
         $topType = $currentType->parent ?? $currentType;
-        if ($vod->play_urls->isEmpty()) {
-            return response()->redirect('/');
-        }
-
         $currentUrl = $vod->play_urls->filter(function ($item) use ($urlId) {
             return $item->id === $urlId;
         })->first();
-        if (empty($currentUrl)) {
-            return response()->redirect('/');
-        }
+
+        Interceptor::ensureNotEmpty($currentUrl,ErrorCode::VOD_URL_EMPTY);
+        
         $nextUrl = $vod->play_urls->filter(function ($item) use ($currentUrl) {
             return $item->index = $currentUrl->index + 1;
         })->first();
         $previousUrl = $vod->play_urls->filter(function ($item) use ($currentUrl) {
             return $item->index = $currentUrl->index - 1;
         })->first();
-    
+
         $highScoreList = $this->vodService->highScoreVods($vod->type_id);
         return view('vodplay', [
             'vod' => $vod,
@@ -125,7 +121,7 @@ class VodController
             'types' => $this->vodTypeService->vodTypeTree(),
             'nextUrl' => $nextUrl,
             'previousUrl' => $previousUrl,
-            'highScoreList'=>$highScoreList
+            'highScoreList' => $highScoreList
         ]);
     }
 

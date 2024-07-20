@@ -156,23 +156,23 @@
                         </div>
                         <div class="myui-panel_bd">
                             <ul class="myui-vodlist__media active col-pd clearfix">
-                                @foreach ($highScoreList as $k => $vod)
+                                @foreach ($highScoreList as $k => $item)
                                     @if ($k == 0)
                                         <li>
                                             <div class="thumb">
                                                 <a class="myui-vodlist__thumb img-xs-70 lazyload"
-                                                    href="/vod_detail/{{ $vod->id }}" title="{{ $vod->name }}"
-                                                    data-original="{{ $vod->pic }}"></a>
+                                                    href="/vod_detail/{{ $item->id }}" title="{{ $item->name }}"
+                                                    data-original="{{ $item->pic }}"></a>
                                             </div>
                                             <div class="detail detail-side">
-                                                <h4 class="title"><a href="/vod_detail/{{ $vod->id }}"><i
+                                                <h4 class="title"><a href="/vod_detail/{{ $item->id }}"><i
                                                             class="fa fa-angle-right text-muted pull-right"></i>
-                                                        {{ $vod->name }}</a></h4>
+                                                        {{ $item->name }}</a></h4>
                                                 <p class="font-12"><span
-                                                        class="text-muted">类型：</span>{{ $vod->type->name }}，<span
-                                                        class="text-muted">地区：</span>{{ $vod->area }}</p>
+                                                        class="text-muted">类型：</span>{{ $item->type->name }}，<span
+                                                        class="text-muted">地区：</span>{{ $item->area }}</p>
                                                 <p class="font-12 margin-0"><span
-                                                        class="text-muted">主演：</span>{{ $vod->actors->implode('name', ',') }}
+                                                        class="text-muted">主演：</span>{{ $item->actors->implode('name', ',') }}
                                                 </p>
                                             </div>
                                         </li>
@@ -181,11 +181,11 @@
                             @endforeach
                         </ul>
                         <ul class="myui-vodlist__text col-pd clearfix">
-                            @foreach ($highScoreList as $i => $vod)
+                            @foreach ($highScoreList as $i => $item)
                                 <li>
-                                    <a href="/vod_detail/{{ $vod->id }}" title="{{ $vod->name }}">
+                                    <a href="/vod_detail/{{ $item->id }}" title="{{ $item->name }}">
                                         <span
-                                            class="badge @if ($i == 0) badge-first @elseif($i == 1)badge-second @elseif($i == 2) badge-third @endif">{{ $i + 1 }}</span>{{ $vod->name }}
+                                            class="badge @if ($i == 0) badge-first @elseif($i == 1)badge-second @elseif($i == 2) badge-third @endif">{{ $i + 1 }}</span>{{ $item->name }}
                                     </a>
                                 </li>
                             @endforeach
@@ -196,4 +196,13 @@
         </div>
     </div>
 </div>
+<script>
+ MyTheme.History.Add({
+    link:document.URL,
+    name:"{{ $vod->name }}",
+    part:"{{ $currentUrl->name }}",
+    pic:"{{ $vod->pic }}",
+ });
+
+</script>
 @endsection

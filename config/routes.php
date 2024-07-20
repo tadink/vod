@@ -9,18 +9,20 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 use App\Controller\IndexController;
 use App\Controller\VodController;
 use Hyperf\HttpServer\Router\Router;
 
-Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
+
 
 Router::get('/favicon.ico', function () {
     return '';
 });
+Router::get('/', [VodController::class, 'index']);
 Router::get('/typevod/{type_id}', [VodController::class, 'typeVod']);
-Router::get('/vod_detail/{vod_id}', [IndexController::class, 'detail']);
-Router::get('/vodplay/{vod_id}-{url_id}', [IndexController::class, 'play']);
+Router::get('/vod_detail/{vod_id}', [VodController::class, 'detail']);
+Router::get('/vodplay/{vod_id}-{url_id}', [VodController::class, 'play']);
 
 Router::get('/captcha', [IndexController::class, 'captcha']);
 Router::get('/login', [IndexController::class, 'loginView']);

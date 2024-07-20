@@ -17,6 +17,10 @@
                     </div>
                     <div class="myui-panel_bd clearfix">
                         <ul class="myui-vodlist clearfix">
+                            @php
+                                $vods = queryVods(['order'=>[['vod_time','desc'],['score','desc']],'limit'=>8,'with'=>['actors']]);
+                            @endphp
+
                             @foreach ($vods as $vod)
                                 <li class="col-lg-8  col-md-8 col-sm-4 col-xs-3">
                                     <div class="myui-vodlist__box">

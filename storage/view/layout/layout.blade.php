@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/static/mytheme-color3.css" type="text/css" name="skin" disabled="">
  
     <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/sweetalert2.all.min.js"></script>
     <script type="text/javascript" src="/static/mytheme-site.js"></script>
     <script type="text/javascript" src="/static/mytheme-ui.js"></script>
     <script type="text/javascript" src="/static/mytheme-cms.js"></script>
@@ -191,47 +192,9 @@
     @include('layout.nav')
     @yield('content')
     @include("layout.footer")
-
-    <div class="myui-msg__form ajax_login"
-        style="display: none; width: 290px; padding: 50px 30px 20px; margin: 0; box-shadow: none;">
-        <div class="myui-panel clearfix">
-            <div class="myui-panel-box clearfix">
-                <div class="myui-panel_bd">
-                    <div class="myui-msg__head text-center">
-                        <p>登录账号</p>
-                    </div>
-                    <form class="mac_login_form">
-                        <p>
-                            <input type="text" class="form-control" name="user_name" placeholder="手机/登录账号">
-                        </p>
-                        <p>
-                            <input type="password" class="form-control" name="user_pwd" placeholder="登录密码">
-                        </p>
-                        <p>
-                            <img class="mac_verify_img pull-right" src="./static/index.html" height="35"
-                                onclick="this.src = this.src+&#39;?&#39;">
-                            <input type="text" class="form-control" name="verify" placeholder="验证码"
-                                style="display: inline-block; width: 100px;">
-                        </p>
-                        <p>
-                            <a href="javascript:;" class="btn btn-block btn-primary login_form_submit">登录</a>
-                        </p>
-                        <p>
-                            <a class="pull-right" href="https://www.duboku.tv/user/reg.html">注册</a>
-                            <a href="https://www.duboku.tv/user/findpass.html">忘记密码</a>
-                        </p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script type="text/javascript">
         MyTheme.Other.Skin();
     </script>
-
-
-
 </body>
 
 </html>

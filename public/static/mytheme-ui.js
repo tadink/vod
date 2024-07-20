@@ -50,6 +50,45 @@
             }
         }
     },
+    Storage: {
+        Set: function (key, value) {
+            localStorage.setItem(key, value);
+        },
+        Get: function (key) {
+            return localStorage.getItem(key);
+        },
+        Del: function (key) {
+            localStorage.removeItem(key)
+        }
+
+    },
+
+    History: {
+        Add: function (item) {
+            let histories = [];
+            let history = localStorage.getItem("history");
+            if (history) {
+                histories = JSON.parse(history);
+            }
+            let index = histories.findIndex(data => data.link == item.link);
+            if (index !== -1) {
+                histories.splice(index, 1);
+            }
+            histories.push(item);
+            if (histories.length > 15) {
+               histories.splice(0,length-15);
+            }
+            localStorage.setItem("history", JSON.stringify(histories));
+        },
+        Get: function () {
+            let history = localStorage.getItem("history");
+            return JSON.parse(history);
+        },
+        Clear: function () {
+            localStorage.removeItem("history");
+            $('.history-list').empty();
+        }
+    },
     Ajax: function (url, type, dataType, data, sfun, efun, cfun) {
         type = type || 'get';
         dataType = dataType || 'json';
@@ -336,69 +375,6 @@
                 }
             });
         },
-
-        History: {
-            Init: function () {
-                if ($(".vod_history").length) {
-                    var $that = $(".vod_history");
-                    MyTheme.Other.History.Set($that.attr('data-name'), $that.attr('data-link'), $that.attr('data-pic'), $that.attr('data-part'), $that.attr('data-limit'));
-                }
-            },
-            Set: function (name, link, pic, part, limit) {
-                if (!link) {
-                    link = document.URL;
-                }
-                var history = MyTheme.Cookie.Get("history");
-                var len = 0;
-                var canadd = true;
-                if (history) {
-                    history = eval("(" + history + ")");
-                    len = history.length;
-                    $(history).each(function () {
-                        if (name == this.name) {
-                            canadd = false;
-                            var json = "[";
-                            $(history).each(function (i) {
-                                var temp_name, temp_img, temp_url, temp_part;
-                                if (this.name == name) {
-                                    temp_name = name;
-                                    temp_img = pic;
-                                    temp_url = link;
-                                    temp_part = part;
-                                } else {
-                                    temp_name = this.name;
-                                    temp_img = this.pic;
-                                    temp_url = this.link;
-                                    temp_part = this.part;
-                                }
-                                json += "{\"name\":\"" + temp_name + "\",\"pic\":\"" + temp_img + "\",\"link\":\"" + temp_url + "\",\"part\":\"" + temp_part + "\"}";
-                                if (i != len - 1)
-                                    json += ",";
-                            })
-                            json += "]";
-                            MyTheme.Cookie.Set('history', json, 365);
-                            return false;
-                        }
-                    });
-                }
-                if (canadd) {
-                    var json = "[";
-                    var start = 0;
-                    var isfirst = "]";
-                    isfirst = !len ? "]" : ",";
-                    json += "{\"name\":\"" + name + "\",\"pic\":\"" + pic + "\",\"link\":\"" + link + "\",\"part\":\"" + part + "\"}" + isfirst;
-                    if (len > limit - 1)
-                        len -= 1;
-                    for (i = 0; i < len - 1; i++) {
-                        json += "{\"name\":\"" + history[i].name + "\",\"pic\":\"" + history[i].pic + "\",\"link\":\"" + history[i].link + "\",\"part\":\"" + history[i].part + "\"},";
-                    }
-                    if (len > 0) {
-                        json += "{\"name\":\"" + history[len - 1].name + "\",\"pic\":\"" + history[len - 1].pic + "\",\"link\":\"" + history[len - 1].link + "\",\"part\":\"" + history[len - 1].part + "\"}]";
-                    }
-                    MyTheme.Cookie.Set('history', json, 365);
-                }
-            }
-        },
         Player: function () {
             if ($("#player-left").length) {
                 var PlayerLeft = $("#player-left");
@@ -562,8 +538,6 @@ $(function () {
     MyTheme.Other.Collapse();
     MyTheme.Other.Slidedown();
     MyTheme.Other.Scrolltop();
-    MyTheme.Other.History.Init();
     MyTheme.Other.Player();
     MyTheme.Other.Close();
-    //MyTheme.Other.Xunlei();
 });
